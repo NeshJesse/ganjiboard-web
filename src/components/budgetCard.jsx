@@ -1,29 +1,51 @@
-import React, { useState } from 'react';
 
-export default function BudgetCard({ type, title, amount, notes, x, y, onDelete }) {
-  const typeStyles = {
-    income: "border-l-4 border-green-500 bg-green-50",
-    expense: "border-l-4 border-red-500 bg-red-50",
-    savings: "border-l-4 border-blue-500 bg-blue-50",
+import { Group, Rect, Text } from "react-konva";
+
+export default function BudgetCardKonva({ id, type, title, amount, notes, x, y, onDragEnd }) {
+  const colors = {
+    income: "#10b981", // green
+    expense: "#ef4444", // red
+    savings: "#3b82f6", // blue
   };
 
   return (
-    <div
-      className={`absolute w-56 p-4 rounded-lg shadow-md cursor-move ${typeStyles[type]}`}
-      style={{ top: y, left: x }}
+    <Group
+      x={x}
+      y={y}
+      draggable
+      onDragEnd={(e) => {
+        onDragEnd(id, e.target.x(), e.target.y());
+      }}
     >
-      <div className="flex justify-between items-start">
-        <h3 className="font-bold">{title}</h3>
-        <span className="text-xs px-2 py-1 rounded-full bg-gray-100">{type}</span>
-      </div>
-      <p className={`font-bold mt-2 ${type === "income" ? "text-green-600" : type === "expense" ? "text-red-600" : "text-blue-600"}`}>
-        KES {amount}
-      </p>
-      {notes && <p className="text-xs text-gray-600 mt-1">{notes}</p>}
-      <div className="mt-2 flex gap-2">
-        <button className="text-blue-500 text-sm">Edit</button>
-        <button onClick={onDelete} className="text-red-500 text-sm">Delete</button>
-      </div>
-    </div>
+      {/* Card Background */}
+      <Rect
+        width={200}
+        height={110}
+        fill="white"
+        stroke={colors[type]}
+        strokeWidth={4}
+        cornerRadius={12}
+        shadowBlur={8}
+      />
+
+      {/* Title */}
+      <Text text={title} fontSize={16} fontStyle="bold" fill="#111827" x={10} y={10} />
+
+      {/* Type Tag */}
+      <Text text={type.toUpperCase()} fontSize={12} fill={colors[type]} x={150} y={10} />
+
+      {/* Amount */}
+      <Text
+        text={`KES ${amount}`}
+        fontSize={18}
+        fill={colors[type]}
+        fontStyle="bold"
+        x={10}
+        y={40}
+      />
+
+      {/* Notes */}
+      {notes && <Text text={notes} fontSize={12} fill="#6b7280" x={10} y={70} width={180} />}
+    </Group>
   );
 }

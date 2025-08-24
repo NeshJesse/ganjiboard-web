@@ -1,10 +1,21 @@
 import { Group, Rect, Text } from "react-konva";
 
-export default function BudgetCardKonva({ id, type, title, amount, notes, x, y, onDragEnd }) {
+export default function BudgetCardKonva({
+  id,
+  type,
+  title,
+  amount,
+  notes,
+  x,
+  y,
+  currentTool,
+  onDragEnd,
+  onCardClick,
+}) {
   const colors = {
-    income: "#10b981", // green
-    expense: "#ef4444", // red
-    savings: "#3b82f6", // blue
+    income: "#10b981",
+    expense: "#ef4444",
+    savings: "#3b82f6",
   };
 
   const cardWidth = 220;
@@ -15,12 +26,13 @@ export default function BudgetCardKonva({ id, type, title, amount, notes, x, y, 
       x={x}
       y={y}
       draggable
-      onDragEnd={(e) => {
-        onDragEnd(id, e.target.x(), e.target.y());
+      onDragEnd={(e) => onDragEnd(id, e.target.x(), e.target.y())}
+      onClick={() => {
+        if (currentTool === "connect") onCardClick(id);
       }}
     >
-      {/* Card Background */}
-      <Rect
+      {/* ... rest of your card rendering code ... */}
+       <Rect
         width={cardWidth}
         height={cardHeight}
         fill="white"
@@ -30,8 +42,6 @@ export default function BudgetCardKonva({ id, type, title, amount, notes, x, y, 
         shadowBlur={6}
         shadowColor="rgba(0,0,0,0.15)"
       />
-
-      {/* Title */}
       <Text
         text={title}
         fontSize={16}
@@ -39,18 +49,11 @@ export default function BudgetCardKonva({ id, type, title, amount, notes, x, y, 
         fill="#111827"
         x={12}
         y={12}
-        width={cardWidth - 70} // keep space for badge
+        width={cardWidth - 70}
         ellipsis
       />
-
-      {/* Type Badge */}
       <Group x={cardWidth - 60} y={10}>
-        <Rect
-          width={50}
-          height={20}
-          fill={colors[type]}
-          cornerRadius={10}
-        />
+        <Rect width={50} height={20} fill={colors[type]} cornerRadius={10} />
         <Text
           text={type.charAt(0).toUpperCase() + type.slice(1)}
           fontSize={11}
@@ -61,8 +64,7 @@ export default function BudgetCardKonva({ id, type, title, amount, notes, x, y, 
           verticalAlign="middle"
         />
       </Group>
-
-      {/* Amount */}
+      
       <Text
         text={`KES ${amount}`}
         fontSize={18}
@@ -71,8 +73,6 @@ export default function BudgetCardKonva({ id, type, title, amount, notes, x, y, 
         x={12}
         y={44}
       />
-
-      {/* Notes */}
       {notes && (
         <Text
           text={notes}

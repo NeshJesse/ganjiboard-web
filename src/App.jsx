@@ -161,6 +161,16 @@ const handleCreateCard = (form) => {
   let newCard;
   
   switch (form.cardType) {
+    case "notes":
+      newCard = {
+        id: Date.now().toString(),
+        cardType: "notes",
+        title: form.title,
+        body: form.body || "",
+        x: 100 + Math.random() * 200,
+        y: 100 + Math.random() * 200,
+      };
+      break;
     case "shopping":
       newCard = {
         id: Date.now().toString(),
@@ -227,7 +237,7 @@ const handleItemToggle = (cardId, itemIndex) => {
   }
 
   return (
-    <div className="w-screen h-screen relative overflow-auto bg-gray-100">
+    <div className="w-460 h-screen relative overflow-y-auto overflow-x-auto">
       {/* ... rest of your JSX ... */}
        <Namebar />
       <Toolbar

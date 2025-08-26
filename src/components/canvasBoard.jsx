@@ -3,6 +3,7 @@ import BudgetCardKonva from "./budgetCard";
 import ConnectionLayer from "./connLayer";
 import ShoppingListCard from "./shoplist";
 import WishlistCard from "./wishlist";
+import NotesCard from "./notes";
 
 export default function CanvasBoard({ 
   cards, 
@@ -40,6 +41,16 @@ export default function CanvasBoard({
       <Layer>
         {cards.map((card) => {
           switch (card.cardType) {
+            case "notes":
+              return (
+                <NotesCard
+                  key={card.id}
+                  {...card}
+                  currentTool={currentTool}
+                  onDragEnd={onUpdateCard}
+                  onCardClick={onCardClick}
+                />
+              );
             case "shopping":
               return (
                 <ShoppingListCard

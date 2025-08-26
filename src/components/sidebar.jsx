@@ -12,6 +12,7 @@ export default function Sidebar({ isOpen, onClose, onCreateCard }) {
     category: "salary",
     frequency: "monthly",
     notes: "",
+    body: "",
     priority: "medium"
   });
 
@@ -54,6 +55,7 @@ export default function Sidebar({ isOpen, onClose, onCreateCard }) {
       category: "salary",
       frequency: "monthly",
       notes: "",
+      body: "",
       priority: "medium"
     });
   };
@@ -78,6 +80,7 @@ export default function Sidebar({ isOpen, onClose, onCreateCard }) {
             <option value="budget">💰 Budget Card</option>
             <option value="shopping">🛒 Shopping List</option>
             <option value="wishlist">⭐ Wishlist</option>
+            <option value="notes">📝 Notes</option>
           </select>
         </div>
 
@@ -160,6 +163,14 @@ export default function Sidebar({ isOpen, onClose, onCreateCard }) {
                 + Add Item
               </button>
             </div>
+          </div>
+        )}
+
+        {/* Notes Specific Fields */}
+        {form.cardType === "notes" && (
+          <div>
+            <label className="block text-sm font-semibold">Body</label>
+            <textarea id="body" value={form.body} onChange={handleChange} className="w-full border rounded p-2 h-32" placeholder="Write your notes here..." />
           </div>
         )}
 

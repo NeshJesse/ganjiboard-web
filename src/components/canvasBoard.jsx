@@ -15,6 +15,7 @@ export default function CanvasBoard({
   const width = window.innerWidth;
   const height = window.innerHeight;
 
+  
   const gridSize = 40;
   const gridLines = [];
   for (let i = 0; i < width / gridSize; i++) {

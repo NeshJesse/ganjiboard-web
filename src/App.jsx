@@ -3,8 +3,10 @@ import Sidebar from "./components/sidebar";
 import BudgetCard from "./components/budgetCard";
 import CanvasBoard from "./components/canvasBoard";
 import Namebar from './components/namebar';
+import HistorySidebar from './components/history';
+import CreateBoardForm from './components/createBoardForm';
 import { useState, useEffect } from "react";
-import { saveBoardState, loadBoardState, clearBoardState, exportBoardData } from "./utils/storage";
+import { ensureInitialized, saveBoardState, loadBoardState, clearBoardState, exportBoardData, importBoardData, createBoard, listBoards, setActiveBoardId, loadBoardById, renameBoard, deleteBoard } from "./utils/storage";
 
 
 export default function App() {
@@ -14,15 +16,21 @@ export default function App() {
   const [connections, setConnections] = useState([]);
   const [pendingConnection, setPendingConnection] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [boards, setBoards] = useState([]);
+  const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
 
   // Load from IndexedDB on mount
   useEffect(() => {
     const loadInitialData = async () => {
       try {
         setIsLoading(true);
+        await ensureInitialized();
         const savedState = await loadBoardState();
         setCards(savedState.cards || []);
         setConnections(savedState.connections || []);
+        const b = await listBoards();
+        setBoards(b);
       } catch (error) {
         console.error("Failed to load board data:", error);
         setCards([]);
@@ -100,6 +108,55 @@ export default function App() {
       console.error("Export failed:", error);
     }
   };
+  const handleImport = async (jsonData) => {
+    try {
+      await importBoardData(jsonData);
+      const state = await loadBoardState();
+      setCards(state.cards || []);
+      setConnections(state.connections || []);
+    } catch (error) {
+      console.error("Import failed:", error);
+    }
+  };
+
+  const refreshBoards = async () => {
+    const b = await listBoards();
+    setBoards(b);
+  };
+
+  const handleCreateBoard = async (name) => {
+    const entry = await createBoard(name.trim() || 'Untitled Board');
+    await refreshBoards();
+    const state = await loadBoardById(entry.id);
+    setCards(state.cards || []);
+    setConnections(state.connections || []);
+    setIsCreateFormOpen(false);
+  };
+
+  const handleSelectBoard = async (boardId) => {
+    await setActiveBoardId(boardId);
+    const state = await loadBoardById(boardId);
+    setCards(state.cards || []);
+    setConnections(state.connections || []);
+    setIsHistoryOpen(false);
+  };
+
+  const handleRenameBoard = async (boardId) => {
+    const name = prompt('New name?');
+    if (name === null) return;
+    await renameBoard(boardId, name.trim() || 'Untitled Board');
+    await refreshBoards();
+  };
+
+  const handleDeleteBoard = async (boardId) => {
+    if (!confirm('Delete this board? This cannot be undone.')) return;
+    await deleteBoard(boardId);
+    await refreshBoards();
+    // Ensure UI reflects possibly changed active board
+    const state = await loadBoardState();
+    setCards(state.cards || []);
+    setConnections(state.connections || []);
+  };
 const handleCreateCard = (form) => {
   let newCard;
   
@@ -170,7 +227,7 @@ const handleItemToggle = (cardId, itemIndex) => {
   }
 
   return (
-    <div className="w-screen h-screen relative overflow-hidden bg-gray-100">
+    <div className="w-screen h-screen relative overflow-auto bg-gray-100">
       {/* ... rest of your JSX ... */}
        <Namebar />
       <Toolbar
@@ -178,6 +235,22 @@ const handleItemToggle = (cardId, itemIndex) => {
         onToolChange={setCurrentTool}
         onClear={handleClear}
         onExport={handleExport}
+        onImport={handleImport}
+        onCreateBoard={() => setIsCreateFormOpen(true)}
+        onToggleHistory={() => setIsHistoryOpen((v) => !v)}
+      />
+      <CreateBoardForm
+        isOpen={isCreateFormOpen}
+        onClose={() => setIsCreateFormOpen(false)}
+        onCreate={handleCreateBoard}
+      />
+      <HistorySidebar
+        isOpen={isHistoryOpen}
+        onClose={() => setIsHistoryOpen(false)}
+        boards={boards}
+        onSelect={handleSelectBoard}
+        onDelete={async (id) => { await handleDeleteBoard(id); }}
+        onRename={async (id) => { await handleRenameBoard(id); }}
       />
        <Sidebar
         isOpen={isSidebarOpen}
@@ -198,6 +271,7 @@ const handleItemToggle = (cardId, itemIndex) => {
         currentTool={currentTool}
         onUpdateCard={handleUpdateCard}
         onCardClick={handleCardClick}
+        onItemToggle={handleItemToggle}
       />
       {/* ... rest of your JSX ... */}
     </div>

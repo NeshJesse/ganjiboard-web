@@ -11,6 +11,8 @@ export default function BudgetCardKonva({
   currentTool,
   onDragEnd,
   onCardClick,
+  onEditCard,
+  onStartEdit,
 }) {
   const colors = {
     income: "#10b981",
@@ -29,6 +31,22 @@ export default function BudgetCardKonva({
       onDragEnd={(e) => onDragEnd(id, e.target.x(), e.target.y())}
       onClick={() => {
         if (currentTool === "connect") onCardClick(id);
+      }}
+      onDblClick={(e) => {
+        if (!onStartEdit) return;
+        const stage = e.target.getStage();
+        const pointer = stage.getPointerPosition();
+        onStartEdit({
+          id,
+          type: 'budget',
+          position: { x: pointer.x + 12, y: pointer.y + 12 },
+          fields: [
+            { key: 'title', label: 'Title', type: 'text' },
+            { key: 'amount', label: 'Amount', type: 'number' },
+            { key: 'notes', label: 'Notes', type: 'textarea' },
+          ],
+          initialValues: { title, amount, notes }
+        });
       }}
     >
       {/* ... rest of your card rendering code ... */}

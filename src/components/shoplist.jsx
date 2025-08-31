@@ -11,7 +11,9 @@ export default function ShoppingListCard({
   currentTool,
   onDragEnd,
   onCardClick,
-  onItemToggle
+  onItemToggle,
+  onEditCard,
+  onStartEdit
 }) {
   const cardWidth = 240; // Slightly wider to accommodate cost
   const cardHeight = 140 + (items.length * 25); // Extra height for cost field
@@ -47,6 +49,21 @@ export default function ShoppingListCard({
         y={12}
         width={cardWidth - 24}
         ellipsis
+        onDblClick={(e) => {
+          if (!onStartEdit) return;
+          const stage = e.target.getStage();
+          const pointer = stage.getPointerPosition();
+          onStartEdit({
+            id,
+            type: 'shopping',
+            position: { x: pointer.x + 12, y: pointer.y + 12 },
+            fields: [
+              { key: 'title', label: 'Title', type: 'text' },
+              { key: 'totalCost', label: 'Total cost', type: 'number' },
+            ],
+            initialValues: { title, totalCost }
+          });
+        }}
       />
 
       {/* Total Cost Display */}

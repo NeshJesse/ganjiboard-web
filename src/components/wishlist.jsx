@@ -8,7 +8,9 @@ export default function WishlistCard({
   y,
   currentTool,
   onDragEnd,
-  onCardClick
+  onCardClick,
+  onEditCard,
+  onStartEdit
 }) {
   const cardWidth = 220;
   const cardHeight = 120 + (items.length * 22);
@@ -49,6 +51,20 @@ export default function WishlistCard({
         y={12}
         width={cardWidth - 24}
         ellipsis
+        onDblClick={(e) => {
+          if (!onStartEdit) return;
+          const stage = e.target.getStage();
+          const pointer = stage.getPointerPosition();
+          onStartEdit({
+            id,
+            type: 'wishlist',
+            position: { x: pointer.x + 12, y: pointer.y + 12 },
+            fields: [
+              { key: 'title', label: 'Title', type: 'text' },
+            ],
+            initialValues: { title }
+          });
+        }}
       />
 
       {items.map((item, index) => (

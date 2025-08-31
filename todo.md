@@ -10,4 +10,7 @@ Can be an alternative to video recording
 
 WOrk on the responsivness of the toolbar,the brand name ,the components at the top of the page,or omit the name itself
 
+Introduce sign in with google for auth.
+Work on the shareable and collaborative part of the app
+
 Landing page done by claude/Nehemiah Onyango chat

@@ -47,7 +47,7 @@ export default function InstructionsModal({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg relative animate-fadeIn">
         {/* Close button */}
         <button

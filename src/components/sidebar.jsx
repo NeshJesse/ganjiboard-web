@@ -77,7 +77,7 @@ export default function Sidebar({ isOpen, onClose, onCreateCard }) {
         <div>
           <label className="block text-sm font-semibold">Card Type</label>
           <select id="cardType" value={form.cardType} onChange={handleChange} className="w-full border rounded p-2">
-            <option value="budget">💰 Budget Card</option>
+            <option value="budget">💰 Cash Card</option>
             <option value="shopping">🛒 Shopping List</option>
             <option value="wishlist">⭐ Wishlist</option>
             <option value="notes">📝 Notes</option>
@@ -94,7 +94,7 @@ export default function Sidebar({ isOpen, onClose, onCreateCard }) {
         {form.cardType === "budget" && (
           <>
             <div>
-              <label className="block text-sm font-semibold">Budget Type</label>
+              <label className="block text-sm font-semibold">CashFlow Type</label>
               <select id="type" value={form.type} onChange={handleChange} className="w-full border rounded p-2">
                 <option value="income">💰 Income</option>
                 <option value="expense">💸 Expense</option>

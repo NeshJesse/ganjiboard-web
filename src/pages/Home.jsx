@@ -204,10 +204,10 @@ const handleCreateCard = (form) => {
       };
       break;
     
-    default: // budget card
+    default: // budget card- rename to cash card
       newCard = {
         id: Date.now().toString(),
-        cardType: "budget",
+        cardType: "cash",
         type: form.type,
         title: form.title,
         amount: form.amount,

@@ -4,6 +4,7 @@ import ConnectionLayer from "./connLayer";
 import ShoppingListCard from "./shoplist";
 import WishlistCard from "./wishlist";
 import NotesCard from "./notes";
+import CashCard from "./cashCard";
 
 export default function CanvasBoard({ 
   cards, 
@@ -81,9 +82,10 @@ export default function CanvasBoard({
                 />
               );
             
-            default: // budget card
+            default: // cash card
               return (
-                <BudgetCardKonva
+                <CashCard
+                
                   key={card.id}
                   {...card}
                   currentTool={currentTool}

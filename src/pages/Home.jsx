@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import { ensureInitialized, saveBoardState, loadBoardState, clearBoardState, exportBoardData, importBoardData, createBoard, listBoards, setActiveBoardId, loadBoardById, renameBoard, deleteBoard } from "../utils/storage";
 
 
-export default function App() {
+export default function Home() {
   const [currentTool, setCurrentTool] = useState("select");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [cards, setCards] = useState([]);

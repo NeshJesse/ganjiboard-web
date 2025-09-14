@@ -8,7 +8,7 @@ import CreateBoardForm from '../components/createBoardForm';
 import InlineEditor from '../components/InlineEditor';
 import { useState, useEffect } from "react";
 import { ensureInitialized, saveBoardState, loadBoardState, clearBoardState, exportBoardData, importBoardData, createBoard, listBoards, setActiveBoardId, loadBoardById, renameBoard, deleteBoard } from "../utils/storage";
-
+import InstructionsModal from "../components/instructions";
 
 export default function Home() {
   const [currentTool, setCurrentTool] = useState("select");
@@ -21,6 +21,7 @@ export default function Home() {
   const [boards, setBoards] = useState([]);
   const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
   const [editorState, setEditorState] = useState({ open: false, cardId: null, fields: [], initialValues: {}, position: { x: 100, y: 100 } });
+  const [showInstructions, setShowInstructions] = useState(true);
 
   // Load from IndexedDB on mount
   useEffect(() => {
@@ -303,6 +304,9 @@ const handleItemToggle = (cardId, itemIndex) => {
         onSave={(values) => { if (editorState.cardId) handleEditCard(editorState.cardId, values); setEditorState({ open: false, cardId: null, fields: [], initialValues: {}, position: { x: 0, y: 0 } }); }}
         onCancel={() => setEditorState({ open: false, cardId: null, fields: [], initialValues: {}, position: { x: 0, y: 0 } })}
       />
+      {showInstructions && (
+        <InstructionsModal onClose={() => setShowInstructions(false)} />
+      )}
       {/* ... rest of your JSX ... */}
     </div>
   );

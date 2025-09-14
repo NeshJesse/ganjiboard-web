@@ -3,30 +3,30 @@ import { FaArrowRight, FaArrowLeft, FaTimes } from "react-icons/fa";
 
 export default function InstructionsModal({ onClose }) {
   const steps = [
-    {
+     {
       title: "Welcome to Home",
       text: "This is the starting point. Here’s how to use the app.",
-      image: "/images/step1.png",
+      image: "/blankcanvas.png",
     },
     {
-      title: "Navigation",
-      text: "Use the sidebar or top menu to navigate between sections.",
-      image: "/images/step2.png",
+      title: "Creating New Boards",
+      text: "Click the New Board Button. This will allow you to create a new board where you can begin adding content and organizing your ideas.",
+      image: "/newboard.png",
     },
     {
-      title: "Features",
-      text: "Explore the main features available on your dashboard.",
-      image: "/images/step3.png",
+      title: "Creating New Cards",
+      text: "On the right side of your screen click the floating blue button,choose a card,.Each card is unique and can be for Income,Expense,Savings,Shopping list, or wishlist",
+      image: "/newcard.png",
     },
     {
-      title: "Shortcuts",
-      text: "Quickly access frequently used tools with shortcuts.",
-      image: "/images/step4.png",
+      title: "Cards",
+      text: "Cards can be moved around and placed anywhere on the board.To edit a cards content simply click on it twice.",
+      image: "/cardedit.png",
     },
     {
       title: "All Set!",
-      text: "You’re ready to start using the app. Enjoy!",
-      image: "/images/step5.png",
+      text: "You’re ready to start using the app. Happy Planning!",
+      image: "/congrats.jpeg",
     },
   ];
 

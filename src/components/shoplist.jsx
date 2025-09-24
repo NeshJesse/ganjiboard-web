@@ -13,7 +13,8 @@ export default function ShoppingListCard({
   onCardClick,
   onItemToggle,
   onEditCard,
-  onStartEdit
+  onStartEdit,
+  onDeleteCard
 }) {
   const cardWidth = 240; // Slightly wider to accommodate cost
   const cardHeight = 140 + (items.length * 25); // Extra height for cost field
@@ -47,7 +48,7 @@ export default function ShoppingListCard({
         fill="#111827"
         x={12}
         y={12}
-        width={cardWidth - 24}
+        width={cardWidth - 50}
         ellipsis
         onDblClick={(e) => {
           if (!onStartEdit) return;
@@ -65,6 +66,35 @@ export default function ShoppingListCard({
           });
         }}
       />
+      
+      {/* Delete button */}
+      <Group x={cardWidth - 25} y={5}>
+        <Circle
+          radius={10}
+          fill="#ef4444"
+          stroke="#dc2626"
+          strokeWidth={1}
+          onClick={(e) => {
+            e.cancelBubble = true;
+            if (onDeleteCard) onDeleteCard(id);
+          }}
+        />
+        <Text
+          text="×"
+          fontSize={14}
+          fill="white"
+          width={20}
+          height={20}
+          align="center"
+          verticalAlign="middle"
+          x={-10}
+          y={-10}
+          onClick={(e) => {
+            e.cancelBubble = true;
+            if (onDeleteCard) onDeleteCard(id);
+          }}
+        />
+      </Group>
 
       {/* Total Cost Display */}
       {totalCost && (

@@ -14,7 +14,8 @@ export default function CanvasBoard({
   onCardClick, 
   onItemToggle,
   onEditCard,
-  onStartEdit
+  onStartEdit,
+  onDeleteCard
 }) {
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -53,6 +54,7 @@ export default function CanvasBoard({
                   onDragEnd={onUpdateCard}
                   onCardClick={onCardClick}
                   onStartEdit={onStartEdit}
+                  onDeleteCard={onDeleteCard}
                 />
               );
             case "shopping":
@@ -66,6 +68,7 @@ export default function CanvasBoard({
                   onItemToggle={onItemToggle}
                   onEditCard={onEditCard}
                   onStartEdit={onStartEdit}
+                  onDeleteCard={onDeleteCard}
                 />
               );
             
@@ -79,13 +82,13 @@ export default function CanvasBoard({
                   onCardClick={onCardClick}
                   onEditCard={onEditCard}
                   onStartEdit={onStartEdit}
+                  onDeleteCard={onDeleteCard}
                 />
               );
             
             default: // cash card
               return (
                 <CashCard
-                
                   key={card.id}
                   {...card}
                   currentTool={currentTool}
@@ -93,6 +96,7 @@ export default function CanvasBoard({
                   onCardClick={onCardClick}
                   onEditCard={onEditCard}
                   onStartEdit={onStartEdit}
+                  onDeleteCard={onDeleteCard}
                 />
               );
           }

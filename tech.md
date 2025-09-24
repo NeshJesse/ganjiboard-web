@@ -209,8 +209,29 @@ The system automatically **persists all data locally** so user progress is never
 
   * Switch from `localStorage` to `localforage` (IndexedDB) for larger and more robust storage.
 
----
-
-✅ This doc now fully covers **what’s built today** and a **roadmap for what’s next**.
-
-Do you want me to also turn this into a **README.md**-style document (with simpler developer-facing instructions), or keep it as a technical design doc for now?
+Individual Card Deletion Feature - Complete
+What I've Added:
+Delete Functionality in Home.jsx:
+Created handleDeleteCard function that removes individual cards
+Added confirmation dialog to prevent accidental deletions
+Automatically cleans up any connections involving the deleted card
+Delete Buttons on All Card Types:
+Cash Cards: Red circular delete button with "×" symbol in top-right corner
+Shopping List Cards: Same delete button design
+Wishlist Cards: Same delete button design
+Notes Cards: Same delete button design
+Proper Event Handling:
+Delete buttons use e.cancelBubble = true to prevent triggering other card interactions
+Buttons are positioned consistently in the top-right corner of each card
+Visual design is consistent across all card types (red background with white "×")
+Connection Cleanup:
+When a card is deleted, all arrows/connections involving that card are automatically removed
+This prevents orphaned connections that would reference non-existent cards
+How It Works:
+User clicks the red "×" button on any card
+Confirmation dialog appears asking "Delete this card? This cannot be undone."
+If confirmed:
+The card is removed from the canvas
+Any connections (arrows) involving that card are automatically deleted
+The board state is automatically saved to IndexedDB
+If cancelled: Nothing happens, card remains on canvas

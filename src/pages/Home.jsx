@@ -116,6 +116,18 @@ export default function Home() {
     setCards(cards.map((c) => (c.id === cardId ? { ...c, ...updates } : c)));
   };
 
+  const handleDeleteCard = (cardId) => {
+    if (!confirm('Delete this card? This cannot be undone.')) return;
+    
+    // Remove the card
+    setCards(cards.filter(c => c.id !== cardId));
+    
+    // Remove any connections involving this card
+    setConnections(connections.filter(conn => 
+      conn.fromId !== cardId && conn.toId !== cardId
+    ));
+  };
+
   const handleStartEdit = ({ id, type, position, fields, initialValues }) => {
     setEditorState({ open: true, cardId: id, fields, initialValues, position });
   };
@@ -295,6 +307,7 @@ const handleItemToggle = (cardId, itemIndex) => {
         onItemToggle={handleItemToggle}
         onEditCard={handleEditCard}
         onStartEdit={handleStartEdit}
+        onDeleteCard={handleDeleteCard}
       />
       <InlineEditor
         isOpen={editorState.open}

@@ -1,4 +1,4 @@
-import { Group, Rect, Text } from "react-konva";
+import { Group, Rect, Text, Circle } from "react-konva";
 
 export default function WishlistCard({
   id,
@@ -10,7 +10,8 @@ export default function WishlistCard({
   onDragEnd,
   onCardClick,
   onEditCard,
-  onStartEdit
+  onStartEdit,
+  onDeleteCard
 }) {
   const cardWidth = 220;
   const cardHeight = 120 + (items.length * 22);
@@ -49,7 +50,7 @@ export default function WishlistCard({
         fill="#111827"
         x={12}
         y={12}
-        width={cardWidth - 24}
+        width={cardWidth - 50}
         ellipsis
         onDblClick={(e) => {
           if (!onStartEdit) return;
@@ -66,6 +67,35 @@ export default function WishlistCard({
           });
         }}
       />
+      
+      {/* Delete button */}
+      <Group x={cardWidth - 25} y={5}>
+        <Circle
+          radius={10}
+          fill="#ef4444"
+          stroke="#dc2626"
+          strokeWidth={1}
+          onClick={(e) => {
+            e.cancelBubble = true;
+            if (onDeleteCard) onDeleteCard(id);
+          }}
+        />
+        <Text
+          text="×"
+          fontSize={14}
+          fill="white"
+          width={20}
+          height={20}
+          align="center"
+          verticalAlign="middle"
+          x={-10}
+          y={-10}
+          onClick={(e) => {
+            e.cancelBubble = true;
+            if (onDeleteCard) onDeleteCard(id);
+          }}
+        />
+      </Group>
 
       {items.map((item, index) => (
         <Group key={index} x={12} y={40 + (index * 22)}>

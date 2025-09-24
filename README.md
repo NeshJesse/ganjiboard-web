@@ -270,6 +270,3 @@ src/
 - **Collaborative**: Designed for shared financial planning
 - **Extensible**: Modular architecture for future features
 
----
-
-This document will be maintained and updated as GanjiBoard evolves from a personal project to a full-featured collaborative financial planning platform.

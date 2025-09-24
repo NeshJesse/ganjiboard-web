@@ -1,4 +1,4 @@
-import { Group, Rect, Text } from "react-konva";
+import { Group, Rect, Text, Circle } from "react-konva";
 
 export default function CashCard({
   id,
@@ -13,6 +13,7 @@ export default function CashCard({
   onCardClick,
   onEditCard,
   onStartEdit,
+  onDeleteCard,
 }) {
   const colors = {
     income: "#10b981",
@@ -80,6 +81,35 @@ export default function CashCard({
           height={20}
           align="center"
           verticalAlign="middle"
+        />
+      </Group>
+      
+      {/* Delete button */}
+      <Group x={cardWidth - 25} y={5}>
+        <Circle
+          radius={10}
+          fill="#ef4444"
+          stroke="#dc2626"
+          strokeWidth={1}
+          onClick={(e) => {
+            e.cancelBubble = true;
+            if (onDeleteCard) onDeleteCard(id);
+          }}
+        />
+        <Text
+          text="×"
+          fontSize={14}
+          fill="white"
+          width={20}
+          height={20}
+          align="center"
+          verticalAlign="middle"
+          x={-10}
+          y={-10}
+          onClick={(e) => {
+            e.cancelBubble = true;
+            if (onDeleteCard) onDeleteCard(id);
+          }}
         />
       </Group>
       

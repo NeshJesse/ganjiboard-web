@@ -8,7 +8,7 @@ chat--- Redeers light account
 **GanjiBoard** is a web-based infinite canvas application for visual financial planning and collaborative budgeting. It combines the flexibility of a digital whiteboard with structured financial tracking capabilities.
 
 **Current Version**: MVP v1.2
-**Status**: In Development
+**Status**: V1 completed and deployed to vercel
 
 ---
 
